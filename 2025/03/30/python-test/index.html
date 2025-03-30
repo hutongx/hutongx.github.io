@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hutongx.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="很高兴能够帮助你组织一个全面的Python学习纲要。以下是一个详细的学习计划，涵盖了从基础到高级的Python知识和相关代码示例，旨在帮助你系统地掌握Python编程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python-test">
+<meta property="og:url" content="https://hutongx.github.io/2025/03/30/python-test/index.html">
+<meta property="og:site_name" content="Tom&#39;s Blog">
+<meta property="og:description" content="很高兴能够帮助你组织一个全面的Python学习纲要。以下是一个详细的学习计划，涵盖了从基础到高级的Python知识和相关代码示例，旨在帮助你系统地掌握Python编程。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-03-30T11:36:38.000Z">
+<meta property="article:modified_time" content="2025-03-30T11:39:52.762Z">
+<meta property="article:author" content="Tom">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hutongx.github.io/2025/03/30/python-test/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>python-test | Tom's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tom's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, My friend</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://hutongx.github.io/2025/03/30/python-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Tom">
+      <meta itemprop="description" content="个人记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tom's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python-test
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-03-30 19:36:38 / Modified: 19:39:52" itemprop="dateCreated datePublished" datetime="2025-03-30T19:36:38+08:00">2025-03-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>很高兴能够帮助你组织一个全面的Python学习纲要。以下是一个详细的学习计划，涵盖了从基础到高级的Python知识和相关代码示例，旨在帮助你系统地掌握Python编程。</p>
+<span id="more"></span>
+
+<hr>
+<h2 id="Python学习纲要"><a href="#Python学习纲要" class="headerlink" title="Python学习纲要"></a><strong>Python学习纲要</strong></h2><h3 id="1-Python基础"><a href="#1-Python基础" class="headerlink" title="1. Python基础"></a><strong>1. Python基础</strong></h3><h4 id="1-1-Python简介"><a href="#1-1-Python简介" class="headerlink" title="1.1 Python简介"></a>1.1 Python简介</h4><ul>
+<li>Python的历史与发展</li>
+<li>Python的应用领域</li>
+<li>安装与配置Python环境（包括Anaconda的使用）</li>
+</ul>
+<h4 id="1-2-基本语法"><a href="#1-2-基本语法" class="headerlink" title="1.2 基本语法"></a>1.2 基本语法</h4><ul>
+<li>第一个Python程序</li>
+<li>注释（单行注释、多行注释）</li>
+<li>Python解释器与脚本</li>
+</ul>
+<h4 id="1-3-数据类型与变量"><a href="#1-3-数据类型与变量" class="headerlink" title="1.3 数据类型与变量"></a>1.3 数据类型与变量</h4><ul>
+<li>数字（int, float, complex）</li>
+<li>字符串（操作、格式化）</li>
+<li>布尔值</li>
+<li>变量命名规则与最佳实践</li>
+</ul>
+<h4 id="1-4-运算符"><a href="#1-4-运算符" class="headerlink" title="1.4 运算符"></a>1.4 运算符</h4><ul>
+<li>算术运算符</li>
+<li>比较运算符</li>
+<li>逻辑运算符</li>
+<li>位运算符</li>
+<li>成员运算符与身份运算符</li>
+</ul>
+<h4 id="1-5-控制结构"><a href="#1-5-控制结构" class="headerlink" title="1.5 控制结构"></a>1.5 控制结构</h4><ul>
+<li>条件语句（if, elif, else）</li>
+<li>循环语句（for, while）</li>
+<li>循环控制（break, continue, pass）</li>
+</ul>
+<h4 id="1-6-数据结构"><a href="#1-6-数据结构" class="headerlink" title="1.6 数据结构"></a>1.6 数据结构</h4><ul>
+<li>列表（列表创建、操作、列表推导式）</li>
+<li>元组</li>
+<li>字典</li>
+<li>集合</li>
+</ul>
+<h4 id="1-7-函数"><a href="#1-7-函数" class="headerlink" title="1.7 函数"></a>1.7 函数</h4><ul>
+<li>函数定义与调用</li>
+<li>参数（位置参数、关键字参数、默认参数、可变参数）</li>
+<li>返回值</li>
+<li>匿名函数（lambda）</li>
+<li>作用域与命名空间</li>
+</ul>
+<h4 id="1-8-模块与包"><a href="#1-8-模块与包" class="headerlink" title="1.8 模块与包"></a>1.8 模块与包</h4><ul>
+<li>模块的导入与使用</li>
+<li>创建自定义模块</li>
+<li>常用标准库介绍（如math, datetime, os, sys）</li>
+</ul>
+<h4 id="1-9-文件操作"><a href="#1-9-文件操作" class="headerlink" title="1.9 文件操作"></a>1.9 文件操作</h4><ul>
+<li>文件的读写</li>
+<li>文件的打开与关闭</li>
+<li>上下文管理器（with语句）</li>
+</ul>
+<h3 id="2-中级Python"><a href="#2-中级Python" class="headerlink" title="2. 中级Python"></a><strong>2. 中级Python</strong></h3><h4 id="2-1-面向对象编程（OOP）"><a href="#2-1-面向对象编程（OOP）" class="headerlink" title="2.1 面向对象编程（OOP）"></a>2.1 面向对象编程（OOP）</h4><ul>
+<li>类与对象</li>
+<li>属性与方法</li>
+<li>构造方法与析构方法</li>
+<li>继承与多态</li>
+<li>魔术方法（<strong>init</strong>, <strong>str</strong>, <strong>repr</strong>, 等）</li>
+</ul>
+<h4 id="2-2-异常处理"><a href="#2-2-异常处理" class="headerlink" title="2.2 异常处理"></a>2.2 异常处理</h4><ul>
+<li>异常的捕获与处理（try, except, finally, else）</li>
+<li>自定义异常</li>
+</ul>
+<h4 id="2-3-迭代器与生成器"><a href="#2-3-迭代器与生成器" class="headerlink" title="2.3 迭代器与生成器"></a>2.3 迭代器与生成器</h4><ul>
+<li>迭代器协议</li>
+<li>创建迭代器</li>
+<li>生成器函数与生成器表达式</li>
+<li>yield关键字</li>
+</ul>
+<h4 id="2-4-装饰器"><a href="#2-4-装饰器" class="headerlink" title="2.4 装饰器"></a>2.4 装饰器</h4><ul>
+<li>函数装饰器</li>
+<li>类装饰器</li>
+<li>装饰器的应用场景</li>
+</ul>
+<h4 id="2-5-上下文管理"><a href="#2-5-上下文管理" class="headerlink" title="2.5 上下文管理"></a>2.5 上下文管理</h4><ul>
+<li>自定义上下文管理器</li>
+<li>with语句的高级用法</li>
+</ul>
+<h4 id="2-6-标准库深入"><a href="#2-6-标准库深入" class="headerlink" title="2.6 标准库深入"></a>2.6 标准库深入</h4><ul>
+<li>正则表达式（re模块）</li>
+<li>日期与时间处理（datetime模块）</li>
+<li>多线程与多进程（threading, multiprocessing模块）</li>
+<li>网络编程（socket模块）</li>
+</ul>
+<h3 id="3-高级Python"><a href="#3-高级Python" class="headerlink" title="3. 高级Python"></a><strong>3. 高级Python</strong></h3><h4 id="3-1-高级数据结构"><a href="#3-1-高级数据结构" class="headerlink" title="3.1 高级数据结构"></a>3.1 高级数据结构</h4><ul>
+<li>列表、字典、集合的高级用法</li>
+<li>deque, namedtuple, defaultdict, Counter等collections模块</li>
+</ul>
+<h4 id="3-2-并发与并行"><a href="#3-2-并发与并行" class="headerlink" title="3.2 并发与并行"></a>3.2 并发与并行</h4><ul>
+<li>线程与进程的区别</li>
+<li>GIL（全局解释器锁）</li>
+<li>异步编程（asyncio, async&#x2F;await）</li>
+</ul>
+<h4 id="3-3-装饰器与元编程"><a href="#3-3-装饰器与元编程" class="headerlink" title="3.3 装饰器与元编程"></a>3.3 装饰器与元编程</h4><ul>
+<li>高级装饰器</li>
+<li>装饰器链</li>
+<li>元类的概念与使用</li>
+</ul>
+<h4 id="3-4-内存管理与性能优化"><a href="#3-4-内存管理与性能优化" class="headerlink" title="3.4 内存管理与性能优化"></a>3.4 内存管理与性能优化</h4><ul>
+<li>内存管理机制</li>
+<li>垃圾回收</li>
+<li>性能分析与优化（timeit, cProfile）</li>
+</ul>
+<h4 id="3-5-C扩展与Cython"><a href="#3-5-C扩展与Cython" class="headerlink" title="3.5 C扩展与Cython"></a>3.5 C扩展与Cython</h4><ul>
+<li>使用C扩展提高性能</li>
+<li>Cython的基本使用</li>
+</ul>
+<h3 id="4-Python生态与框架"><a href="#4-Python生态与框架" class="headerlink" title="4. Python生态与框架"></a><strong>4. Python生态与框架</strong></h3><h4 id="4-1-Web开发"><a href="#4-1-Web开发" class="headerlink" title="4.1 Web开发"></a>4.1 Web开发</h4><ul>
+<li>Flask框架<ul>
+<li>路由与视图</li>
+<li>模板引擎</li>
+<li>表单处理</li>
+<li>数据库集成</li>
+</ul>
+</li>
+<li>Django框架<ul>
+<li>MTV架构</li>
+<li>ORM（对象关系映射）</li>
+<li>管理后台</li>
+<li>用户认证</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-2-数据科学与机器学习"><a href="#4-2-数据科学与机器学习" class="headerlink" title="4.2 数据科学与机器学习"></a>4.2 数据科学与机器学习</h4><ul>
+<li>NumPy</li>
+<li>pandas</li>
+<li>Matplotlib与Seaborn</li>
+<li>scikit-learn</li>
+<li>TensorFlow与PyTorch</li>
+</ul>
+<h4 id="4-3-自动化与脚本"><a href="#4-3-自动化与脚本" class="headerlink" title="4.3 自动化与脚本"></a>4.3 自动化与脚本</h4><ul>
+<li>自动化脚本编写</li>
+<li>爬虫开发（requests, BeautifulSoup, Scrapy）</li>
+<li>自动化测试（unittest, pytest）</li>
+</ul>
+<h4 id="4-4-GUI开发"><a href="#4-4-GUI开发" class="headerlink" title="4.4 GUI开发"></a>4.4 GUI开发</h4><ul>
+<li>Tkinter基础</li>
+<li>PyQt入门</li>
+</ul>
+<h4 id="4-5-数据库"><a href="#4-5-数据库" class="headerlink" title="4.5 数据库"></a>4.5 数据库</h4><ul>
+<li>SQL与数据库基础</li>
+<li>使用SQLite, MySQL, PostgreSQL</li>
+<li>ORM工具（SQLAlchemy）</li>
+</ul>
+<h3 id="5-实战项目"><a href="#5-实战项目" class="headerlink" title="5. 实战项目"></a><strong>5. 实战项目</strong></h3><h4 id="5-1-小项目"><a href="#5-1-小项目" class="headerlink" title="5.1 小项目"></a>5.1 小项目</h4><ul>
+<li>简易计算器</li>
+<li>TODO List应用</li>
+<li>简单的博客系统</li>
+</ul>
+<h4 id="5-2-中型项目"><a href="#5-2-中型项目" class="headerlink" title="5.2 中型项目"></a>5.2 中型项目</h4><ul>
+<li>Web爬虫</li>
+<li>数据分析项目</li>
+<li>简单的RESTful API</li>
+</ul>
+<h4 id="5-3-大型项目"><a href="#5-3-大型项目" class="headerlink" title="5.3 大型项目"></a>5.3 大型项目</h4><ul>
+<li>全功能Web应用（如电商平台）</li>
+<li>数据可视化仪表盘</li>
+<li>机器学习模型的完整流程</li>
+</ul>
+<h3 id="6-资源与工具"><a href="#6-资源与工具" class="headerlink" title="6. 资源与工具"></a><strong>6. 资源与工具</strong></h3><h4 id="6-1-开发工具"><a href="#6-1-开发工具" class="headerlink" title="6.1 开发工具"></a>6.1 开发工具</h4><ul>
+<li>集成开发环境（IDE）：PyCharm, VSCode</li>
+<li>代码管理：Git与GitHub</li>
+</ul>
+<h4 id="6-2-学习资源"><a href="#6-2-学习资源" class="headerlink" title="6.2 学习资源"></a>6.2 学习资源</h4><ul>
+<li>官方文档：<a href="https://docs.python.org/zh-cn/3/">Python官方文档</a></li>
+<li>在线教程与课程<ul>
+<li><a href="https://www.liaoxuefeng.com/wiki/1016959663602400">廖雪峰的Python教程</a></li>
+<li><a href="https://www.runoob.com/python3/python3-tutorial.html">Python教程网</a></li>
+</ul>
+</li>
+<li>书籍推荐<ul>
+<li>《Python编程：从入门到实践》</li>
+<li>《流畅的Python》</li>
+<li>《Python Cookbook》</li>
+</ul>
+</li>
+</ul>
+<h4 id="6-3-社区与支持"><a href="#6-3-社区与支持" class="headerlink" title="6.3 社区与支持"></a>6.3 社区与支持</h4><ul>
+<li>Stack Overflow</li>
+<li>Reddit的Python板块</li>
+<li>各类Python开发者社区与论坛</li>
+</ul>
+<h3 id="7-学习建议"><a href="#7-学习建议" class="headerlink" title="7. 学习建议"></a><strong>7. 学习建议</strong></h3><ul>
+<li><strong>循序渐进</strong>：从基础开始，确保每个概念都理解透彻后再进行下一个章节。</li>
+<li><strong>多动手实践</strong>：编写代码是掌握编程的关键，尽量多做练习和项目。</li>
+<li><strong>参与社区</strong>：加入Python社区，参与讨论，向他人学习。</li>
+<li><strong>持续学习</strong>：Python生态变化迅速，保持学习的热情和习惯。</li>
+</ul>
+<hr>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a><strong>示例代码</strong></h3><p>以下是一些基础概念的示例代码，帮助你更好地理解。</p>
+<h4 id="1-基本语法"><a href="#1-基本语法" class="headerlink" title="1. 基本语法"></a><strong>1. 基本语法</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这是一个简单的Python程序</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello, Python!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-数据结构"><a href="#2-数据结构" class="headerlink" title="2. 数据结构"></a><strong>2. 数据结构</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列表操作</span></span><br><span class="line">fruits = [<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;banana&quot;</span>, <span class="string">&quot;cherry&quot;</span>]</span><br><span class="line">fruits.append(<span class="string">&quot;date&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(fruits)  <span class="comment"># 输出: [&#x27;apple&#x27;, &#x27;banana&#x27;, &#x27;cherry&#x27;, &#x27;date&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-函数与控制结构"><a href="#3-函数与控制结构" class="headerlink" title="3. 函数与控制结构"></a><strong>3. 函数与控制结构</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">is_even</span>(<span class="params">number</span>):</span><br><span class="line">    <span class="keyword">if</span> number % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">6</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;i&#125;</span> is even: <span class="subst">&#123;is_even(i)&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-类与对象"><a href="#4-类与对象" class="headerlink" title="4. 类与对象"></a><strong>4. 类与对象</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">bark</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;self.name&#125;</span> says woof!&quot;</span>)</span><br><span class="line"></span><br><span class="line">my_dog = Dog(<span class="string">&quot;Buddy&quot;</span>)</span><br><span class="line">my_dog.bark()  <span class="comment"># 输出: Buddy says woof!</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-文件操作"><a href="#5-文件操作" class="headerlink" title="5. 文件操作"></a><strong>5. 文件操作</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 写入文件</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;example.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    file.write(<span class="string">&quot;Hello, this is a test file.&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取文件</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;example.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    content = file.read()</span><br><span class="line">    <span class="built_in">print</span>(content)  <span class="comment"># 输出: Hello, this is a test file.</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/03/30/first-java-test/" rel="prev" title="first-java-test">
+      <i class="fa fa-chevron-left"></i> first-java-test
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python%E5%AD%A6%E4%B9%A0%E7%BA%B2%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">Python学习纲要</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Python%E5%9F%BA%E7%A1%80"><span class="nav-number">1.1.</span> <span class="nav-text">1. Python基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-Python%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 Python简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 基本语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 数据类型与变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5 控制结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.6 数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.7 函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-8-%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%8C%85"><span class="nav-number">1.1.8.</span> <span class="nav-text">1.8 模块与包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-9-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">1.1.9.</span> <span class="nav-text">1.9 文件操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%AD%E7%BA%A7Python"><span class="nav-number">1.2.</span> <span class="nav-text">2. 中级Python</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%EF%BC%88OOP%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 面向对象编程（OOP）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 异常处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8E%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 迭代器与生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 装饰器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 上下文管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-%E6%A0%87%E5%87%86%E5%BA%93%E6%B7%B1%E5%85%A5"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.6 标准库深入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%AB%98%E7%BA%A7Python"><span class="nav-number">1.3.</span> <span class="nav-text">3. 高级Python</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 高级数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 并发与并行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-%E8%A3%85%E9%A5%B0%E5%99%A8%E4%B8%8E%E5%85%83%E7%BC%96%E7%A8%8B"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 装饰器与元编程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E4%B8%8E%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 内存管理与性能优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-C%E6%89%A9%E5%B1%95%E4%B8%8ECython"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 C扩展与Cython</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Python%E7%94%9F%E6%80%81%E4%B8%8E%E6%A1%86%E6%9E%B6"><span class="nav-number">1.4.</span> <span class="nav-text">4. Python生态与框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-Web%E5%BC%80%E5%8F%91"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 Web开发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 数据科学与机器学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B8%8E%E8%84%9A%E6%9C%AC"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 自动化与脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-GUI%E5%BC%80%E5%8F%91"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 GUI开发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.4.5.</span> <span class="nav-text">4.5 数据库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.5.</span> <span class="nav-text">5. 实战项目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-%E5%B0%8F%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 小项目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-%E4%B8%AD%E5%9E%8B%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 中型项目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-%E5%A4%A7%E5%9E%8B%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3 大型项目</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E8%B5%84%E6%BA%90%E4%B8%8E%E5%B7%A5%E5%85%B7"><span class="nav-number">1.6.</span> <span class="nav-text">6. 资源与工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="nav-number">1.6.1.</span> <span class="nav-text">6.1 开发工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90"><span class="nav-number">1.6.2.</span> <span class="nav-text">6.2 学习资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3-%E7%A4%BE%E5%8C%BA%E4%B8%8E%E6%94%AF%E6%8C%81"><span class="nav-number">1.6.3.</span> <span class="nav-text">6.3 社区与支持</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE"><span class="nav-number">1.7.</span> <span class="nav-text">7. 学习建议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">1.8.</span> <span class="nav-text">示例代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">1.8.1.</span> <span class="nav-text">1. 基本语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.8.2.</span> <span class="nav-text">2. 数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%87%BD%E6%95%B0%E4%B8%8E%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84"><span class="nav-number">1.8.3.</span> <span class="nav-text">3. 函数与控制结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.8.4.</span> <span class="nav-text">4. 类与对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">1.8.5.</span> <span class="nav-text">5. 文件操作</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tom"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Tom</p>
+  <div class="site-description" itemprop="description">个人记录</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/" title="GitHub → https:&#x2F;&#x2F;github.com" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gmail.com" title="E-Mail → mailto:gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/" title="YouTube → https:&#x2F;&#x2F;youtube.com" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright" style="text-align: center;">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tom</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
