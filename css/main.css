@@ -1171,7 +1171,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ffffc2;
+  background: #ffe54a;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2384,4 +2384,16 @@ hr {
 }
 .sub-menu .menu-item {
   display: inline-block;
+}
+.footer {
+  text-align: center;
+  padding: 20px 0;
+  background-color: #f8f8f8; /* 修改背景色 */
+}
+.footer a {
+  text-decoration: none;
+  color: #333; /* 设置链接颜色 */
+}
+.footer p {
+  margin: 0;
 }
