@@ -28,7 +28,7 @@
 <meta property="og:description" content="问题分类  寻找前K个最大元素 (寻找第K大的元素(该元素为最小堆的堆顶元素)) 寻找前K个最小元素 (寻找第K小的元素(该元素为最大堆的堆顶元素)) 寻找出现次数前K的元素">
 <meta property="og:locale">
 <meta property="article:published_time" content="2025-04-03T05:41:17.000Z">
-<meta property="article:modified_time" content="2025-04-03T07:41:54.391Z">
+<meta property="article:modified_time" content="2025-04-03T07:47:51.426Z">
 <meta property="article:author" content="Tom">
 <meta property="article:tag" content="Leetcode">
 <meta property="article:tag" content="TopK">
@@ -192,7 +192,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2025-04-03 13:41:17 / Modified: 15:41:54" itemprop="dateCreated datePublished" datetime="2025-04-03T13:41:17+08:00">2025-04-03</time>
+              <time title="Created: 2025-04-03 13:41:17 / Modified: 15:47:51" itemprop="dateCreated datePublished" datetime="2025-04-03T13:41:17+08:00">2025-04-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,17 +242,17 @@
 <p><a href="https://juejin.cn/post/6844903774004183047">算法必学：经典的 Top K 问题</a></p>
 <p><a href="https://leetcode.cn/problems/top-k-frequent-elements/">347.前 K个高频元素</a> <br><br><a href="https://leetcode.cn/problems/xx4gT2/description/">LCR 076.数组中的第K个最大元素</a></p>
 </blockquote>
-<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><h5 id="1-前K个最大元素"><a href="#1-前K个最大元素" class="headerlink" title="1.前K个最大元素"></a>1.前K个最大元素</h5><p>给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。<br><br>请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。</p>
-<p>示例 1：<br><br>输入：nums &#x3D; [3,2,1,5,6,4], k &#x3D; 2 <br><br>输出：5<br>示例 2：</p>
-<p>输入：nums &#x3D; [3,2,3,1,2,4,5,5,6], k &#x3D; 4 <br><br>输出：4</p>
-<p>提示：<br><br>1 &lt;&#x3D; k &lt;&#x3D; nums.length &lt;&#x3D; 104 <br><br>-104 &lt;&#x3D; nums[i] &lt;&#x3D; 104</p>
+<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><h5 id="1-前K个最大元素"><a href="#1-前K个最大元素" class="headerlink" title="1.前K个最大元素"></a>1.前K个最大元素</h5><p>给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。<br>请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。</p>
+<p>示例 1：<br>  输入：nums &#x3D; [3,2,1,5,6,4], k &#x3D; 2<br>  输出：5</p>
+<p>示例 2：<br>  输入：nums &#x3D; [3,2,3,1,2,4,5,5,6], k &#x3D; 4<br>  输出：4</p>
+<p>提示：<br>  1 &lt;&#x3D; k &lt;&#x3D; nums.length &lt;&#x3D; 104<br>  -104 &lt;&#x3D; nums[i] &lt;&#x3D; 104</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findKthLargest</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line"></span><br><span class="line">        Queue&lt;Integer&gt; heap = <span class="keyword">new</span> <span class="title class_">PriorityQueue</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;k; i++)&#123;</span><br><span class="line">            heap.offer(nums[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(heap.size() == nums.length) <span class="keyword">return</span> heap.peek().intValue();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=heap.size(); i&lt;nums.length; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(heap.peek().intValue() &lt; nums[i])&#123;</span><br><span class="line">                heap.offer(nums[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(heap.size() &gt; k) heap.poll();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> heap.peek().intValue();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<h5 id="2-前K个高频元素"><a href="#2-前K个高频元素" class="headerlink" title="2.前K个高频元素"></a>2.前K个高频元素</h5><p>给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。你可以按 任意顺序 返回答案。</p>
-<p>示例 1: <br><br>输入: nums &#x3D; [1,1,1,2,2,3], k &#x3D; 2 <br><br>输出: [1,2]</p>
-<p>示例 2: <br><br>输入: nums &#x3D; [1], k &#x3D; 1 <br><br>输出: [1]</p>
+<h5 id="2-前K个高频元素"><a href="#2-前K个高频元素" class="headerlink" title="2.前K个高频元素"></a>2.前K个高频元素</h5><p>给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。<br>你可以按 任意顺序 返回答案。</p>
+<p>示例 1:<br>  输入: nums &#x3D; [1,1,1,2,2,3], k &#x3D; 2<br>  输出: [1,2]</p>
+<p>示例 2:<br>  输入: nums &#x3D; [1], k &#x3D; 1<br>  输出: [1]</p>
 <p><strong>解答</strong></p>
 <p>下面是一种常用的解法，利用 HashMap 统计每个数字出现的频率，然后使用小顶堆（PriorityQueue）维护前 k 个频率最高的元素。因为小顶堆的堆顶是当前候选中频率最小的元素，所以当堆中元素数超过 k 个时，堆顶的那个（频率最小的）就会被剔除，这样最终堆中剩下的就是频率最高的 k 个数字。</p>
 <p>下面是具体的 Java 实现代码（Java 8+）：</p>
