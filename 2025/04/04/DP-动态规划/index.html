@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hutongx.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="下面给出一个高度抽象、通用的动态规划（DP）解题模板，全部采用 Java 语言实现。该模板不依赖于具体题目，而是按照动态规划的基本思路构建：问题拆分、状态定义、状态转移、初始化、答案提取，以及必要时的空间优化。可以根据实际题目的特点，在相应的位置替换或扩展代码逻辑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DP 动态规划">
+<meta property="og:url" content="https://hutongx.github.io/2025/04/04/DP-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/index.html">
+<meta property="og:site_name" content="Tom&#39;s Blog">
+<meta property="og:description" content="下面给出一个高度抽象、通用的动态规划（DP）解题模板，全部采用 Java 语言实现。该模板不依赖于具体题目，而是按照动态规划的基本思路构建：问题拆分、状态定义、状态转移、初始化、答案提取，以及必要时的空间优化。可以根据实际题目的特点，在相应的位置替换或扩展代码逻辑。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-04-04T03:44:51.000Z">
+<meta property="article:modified_time" content="2025-04-04T04:01:45.974Z">
+<meta property="article:author" content="Tom">
+<meta property="article:tag" content="Leetcode">
+<meta property="article:tag" content="动态规划">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hutongx.github.io/2025/04/04/DP-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>DP 动态规划 | Tom's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tom's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, My friend</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://hutongx.github.io/2025/04/04/DP-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Tom">
+      <meta itemprop="description" content="个人记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tom's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DP 动态规划
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-04-04 11:44:51 / Modified: 12:01:45" itemprop="dateCreated datePublished" datetime="2025-04-04T11:44:51+08:00">2025-04-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" itemprop="url" rel="index"><span itemprop="name">动态规划</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>下面给出一个高度抽象、通用的动态规划（DP）解题模板，全部采用 Java 语言实现。该模板不依赖于具体题目，而是按照动态规划的基本思路构建：问题拆分、状态定义、状态转移、初始化、答案提取，以及必要时的空间优化。可以根据实际题目的特点，在相应的位置替换或扩展代码逻辑。</p>
+<span id="more"></span>
+
+<h2 id="一、动态规划解题通用步骤"><a href="#一、动态规划解题通用步骤" class="headerlink" title="一、动态规划解题通用步骤"></a>一、动态规划解题通用步骤</h2><ol>
+<li><p><strong>问题分析与拆分子问题</strong>  </p>
+<ul>
+<li>分析题意，判断问题能否拆分为多个子问题，并检查是否存在重叠子问题。</li>
+</ul>
+</li>
+<li><p><strong>状态定义</strong>  </p>
+<ul>
+<li>明确用一个或多个 dp 数组&#x2F;矩阵来描述子问题的最优解。  </li>
+<li>例如：  <ul>
+<li>对于一维数组问题，通常定义 <code>dp[i]</code> 表示到第 <em>i</em> 个元素的最优状态；  </li>
+<li>对于字符串问题，定义 <code>dp[i][j]</code> 表示两个字符串前 <em>i</em> 和 <em>j</em> 个字符的最优解；  </li>
+<li>对于二维矩阵问题，定义 <code>dp[i][j]</code> 表示从起点到 (i, j) 的最优路径值（或计数等）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>设计状态转移方程</strong>  </p>
+<ul>
+<li>找出子问题之间的联系，用前面求解的状态推导当前状态。  </li>
+<li>注意讨论转移时的所有可能情况，例如字符匹配与不匹配、不同方向的选择等。</li>
+</ul>
+</li>
+<li><p><strong>初始化与边界条件</strong>  </p>
+<ul>
+<li>给 dp 数组或矩阵中最小规模的子问题赋初值，避免越界问题。  </li>
+<li>比如：对于字符串 DP，常见的边界是 <code>dp[0][j] = 0</code> 和 <code>dp[i][0] = 0</code>；对于矩阵 DP，则通常先初始化第一行和第一列。</li>
+</ul>
+</li>
+<li><p><strong>答案提取</strong>  </p>
+<ul>
+<li>根据题目要求，从 dp 数组或矩阵中提取最终答案。  </li>
+<li>可能是直接返回 <code>dp[n]</code>、<code>dp[m][n]</code>，或者遍历 dp 得到全局最值。</li>
+</ul>
+</li>
+<li><p><strong>代码优化</strong>  </p>
+<ul>
+<li>如果状态转移只依赖于部分状态，可以考虑空间压缩（如滚动数组）来降低空间复杂度。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 动态规划通用抽象模板 (Java版)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 模板结构说明：</span></span><br><span class="line"><span class="comment"> * 1. 问题分析：将大问题拆分为若干子问题，明确每个子问题的最优解（或计数）。</span></span><br><span class="line"><span class="comment"> * 2. 状态定义：用 dp 数组/矩阵（或其他数据结构）来表示子问题的状态。</span></span><br><span class="line"><span class="comment"> *    - 例如，对于一维问题：dp[i] 表示以第 i 个元素为终点的最优解；</span></span><br><span class="line"><span class="comment"> *      对于字符串问题：dp[i][j] 表示 s1 的前 i 个字符与 s2 的前 j 个字符之间的最优状态；</span></span><br><span class="line"><span class="comment"> *      对于二维矩阵问题：dp[i][j] 表示从起点到 (i, j) 的最优值。</span></span><br><span class="line"><span class="comment"> * 3. 状态转移：设计转移方程，将已解决的子问题组合成更大问题的解。</span></span><br><span class="line"><span class="comment"> * 4. 初始化与边界条件：为最小子问题设定初始值，确保转移过程不会越界。</span></span><br><span class="line"><span class="comment"> * 5. 答案提取：从 dp 数组/矩阵中抽取最终答案。</span></span><br><span class="line"><span class="comment"> * 6. 空间优化：若状态转移仅依赖于有限历史状态，可采用滚动数组等技巧压缩空间。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DPAbstractTemplate</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* ==============================================</span></span><br><span class="line"><span class="comment">       一、1D 动态规划模板（适用于线性数组、序列类问题）</span></span><br><span class="line"><span class="comment">       ============================================== */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">solveDP1D</span><span class="params">(<span class="type">int</span>[] arr)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> arr.length;</span><br><span class="line">        <span class="comment">// 定义 dp 数组，dp[i] 表示到位置 i 的最优状态</span></span><br><span class="line">        <span class="type">int</span>[] dp = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 初始化：设置最小子问题的状态（例如 dp[0] = 初始值）</span></span><br><span class="line">        dp[<span class="number">0</span>] = initialState1D(arr[<span class="number">0</span>]);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 状态转移：根据前一状态和当前位置的输入，更新 dp[i]</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">            dp[i] = transition1D(dp, arr, i);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 答案提取：根据题目要求，可以是 dp[n-1] 或 dp 数组中的最值</span></span><br><span class="line">        <span class="keyword">return</span> extractAnswer1D(dp);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 定义 1D DP 初始状态（可根据具体问题修改）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">initialState1D</span><span class="params">(<span class="type">int</span> value)</span> &#123;</span><br><span class="line">        <span class="comment">// 示例：直接使用输入值作为初始状态</span></span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 定义 1D DP 状态转移逻辑（此处仅为示例，需根据题目调整）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">transition1D</span><span class="params">(<span class="type">int</span>[] dp, <span class="type">int</span>[] arr, <span class="type">int</span> i)</span> &#123;</span><br><span class="line">        <span class="comment">// 示例：转移方程：dp[i] = dp[i-1] + arr[i]（例如累加求和问题）</span></span><br><span class="line">        <span class="comment">// 实际问题中可能需要取最大、最小或其他组合方式</span></span><br><span class="line">        <span class="keyword">return</span> dp[i - <span class="number">1</span>] + arr[i];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 提取 1D DP 最终答案（此处示例返回 dp 数组中的最大值）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">extractAnswer1D</span><span class="params">(<span class="type">int</span>[] dp)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> dp[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; dp.length; i++) &#123;</span><br><span class="line">            ans = Math.max(ans, dp[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* ==============================================</span></span><br><span class="line"><span class="comment">       二、字符串动态规划模板（适用于字符串匹配、编辑距离、最长公共子序列等）</span></span><br><span class="line"><span class="comment">       ============================================== */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">solveDPString</span><span class="params">(String s1, String s2)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> s1.length(), n = s2.length();</span><br><span class="line">        <span class="comment">// 定义 dp 数组，dp[i][j] 表示 s1 前 i 个字符与 s2 前 j 个字符之间的最优状态</span></span><br><span class="line">        <span class="type">int</span>[][] dp = <span class="keyword">new</span> <span class="title class_">int</span>[m + <span class="number">1</span>][n + <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 初始化：当任一字符串为空时的状态（通常为 0 或其他初始值）</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;= m; i++) &#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = initialStateString();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt;= n; j++) &#123;</span><br><span class="line">            dp[<span class="number">0</span>][j] = initialStateString();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 状态转移：遍历两个字符串，更新 dp 状态</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">1</span>; j &lt;= n; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (match(s1.charAt(i - <span class="number">1</span>), s2.charAt(j - <span class="number">1</span>))) &#123;</span><br><span class="line">                    dp[i][j] = dp[i - <span class="number">1</span>][j - <span class="number">1</span>] + valueIfMatch(s1.charAt(i - <span class="number">1</span>), s2.charAt(j - <span class="number">1</span>));</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    dp[i][j] = combine(dp[i - <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 根据具体问题，答案可能是 dp[m][n] 或其他形式</span></span><br><span class="line">        <span class="keyword">return</span> dp[m][n];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化字符串 DP 时的基础状态（通常为 0）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">initialStateString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 判断两个字符是否匹配（可根据问题定义不同匹配规则）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">match</span><span class="params">(<span class="type">char</span> c1, <span class="type">char</span> c2)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> c1 == c2;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 当两个字符匹配时，增加的值（例如加 1，表示计数）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">valueIfMatch</span><span class="params">(<span class="type">char</span> c1, <span class="type">char</span> c2)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 合并两种状态的结果（例如取较大值、较小值或其他规则）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">combine</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> Math.max(a, b);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* ==============================================</span></span><br><span class="line"><span class="comment">       三、二维矩阵动态规划模板（适用于网格类问题，如路径问题、最小/最大路径和等）</span></span><br><span class="line"><span class="comment">       ============================================== */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">solveDPMatrix</span><span class="params">(<span class="type">int</span>[][] grid)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> grid.length, n = grid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="comment">// 定义 dp 数组，dp[i][j] 表示从起点到 (i,j) 的最优状态</span></span><br><span class="line">        <span class="type">int</span>[][] dp = <span class="keyword">new</span> <span class="title class_">int</span>[m][n];</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 初始化起点状态</span></span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = initialStateMatrix(grid[<span class="number">0</span>][<span class="number">0</span>]);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 初始化第一行</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">            dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j - <span class="number">1</span>] + transitionMatrix(dp[<span class="number">0</span>][j - <span class="number">1</span>], grid[<span class="number">0</span>][j]);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 初始化第一列</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; m; i++) &#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = dp[i - <span class="number">1</span>][<span class="number">0</span>] + transitionMatrix(dp[i - <span class="number">1</span>][<span class="number">0</span>], grid[i][<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 状态转移：从上和左选择最佳状态更新当前格子</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="comment">// 具体的转移逻辑根据问题可能是取最小值、最大值、或其他函数</span></span><br><span class="line">                dp[i][j] = grid[i][j] + combine(dp[i - <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 根据问题要求，答案可能为终点状态 dp[m-1][n-1] 或其他值</span></span><br><span class="line">        <span class="keyword">return</span> dp[m - <span class="number">1</span>][n - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化二维矩阵 DP 时的基础状态（例如起点的值）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">initialStateMatrix</span><span class="params">(<span class="type">int</span> value)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 计算二维矩阵中状态转移时增加的值（可根据具体问题定义，如直接相加）</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">transitionMatrix</span><span class="params">(<span class="type">int</span> previousState, <span class="type">int</span> currentValue)</span> &#123;</span><br><span class="line">        <span class="comment">// 示例：简单相加</span></span><br><span class="line">        <span class="keyword">return</span> currentValue;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* ==============================================</span></span><br><span class="line"><span class="comment">       主方法，供测试调用</span></span><br><span class="line"><span class="comment">       ============================================== */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">DPAbstractTemplate</span> <span class="variable">dpSolver</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DPAbstractTemplate</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1D DP 示例（注意：仅为模板示例，具体题目需修改初始值、转移逻辑与答案提取）</span></span><br><span class="line">        <span class="type">int</span>[] array = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans1D</span> <span class="operator">=</span> dpSolver.solveDP1D(array);</span><br><span class="line">        System.out.println(<span class="string">&quot;1D DP 最终答案: &quot;</span> + ans1D);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 字符串 DP 示例（以两个字符串为例）</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="string">&quot;ABCBDAB&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="string">&quot;BDCABA&quot;</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ansStr</span> <span class="operator">=</span> dpSolver.solveDPString(s1, s2);</span><br><span class="line">        System.out.println(<span class="string">&quot;字符串 DP 最终答案: &quot;</span> + ansStr);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 二维矩阵 DP 示例（以简单网格为例）</span></span><br><span class="line">        <span class="type">int</span>[][] grid = &#123;</span><br><span class="line">            &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>&#125;,</span><br><span class="line">            &#123;<span class="number">1</span>, <span class="number">5</span>, <span class="number">1</span>&#125;,</span><br><span class="line">            &#123;<span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>&#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ansMatrix</span> <span class="operator">=</span> dpSolver.solveDPMatrix(grid);</span><br><span class="line">        System.out.println(<span class="string">&quot;二维矩阵 DP 最终答案: &quot;</span> + ansMatrix);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="模板说明"><a href="#模板说明" class="headerlink" title="模板说明"></a>模板说明</h3><ol>
+<li><p><strong>抽象与通用性</strong>  </p>
+<ul>
+<li>每个方法均遵循动态规划的基本步骤：<br>① 定义状态（例如：dp 数组&#x2F;矩阵）；<br>② 初始化基本子问题；<br>③ 通过循环构造状态转移；<br>④ 最后提取最终答案。  </li>
+<li>方法中的细节（如初始值、转移函数、合并函数）都采用抽象形式，需要根据实际题目修改。</li>
+</ul>
+</li>
+<li><p><strong>扩展与应用</strong>  </p>
+<ul>
+<li>若问题为字符串或二维矩阵问题，可直接参考相应模板；  </li>
+<li>对于其他类型的 DP 问题，只需调整状态定义和转移逻辑即可；  </li>
+<li>模板中的注释明确说明了每个部分的作用，便于迁移至具体题目。</li>
+</ul>
+</li>
+<li><p><strong>核心代码模式</strong>  </p>
+<ul>
+<li>保持代码简洁、模块化，便于在题中快速复用和调试；  </li>
+<li>空间优化、自顶向下（递归+记忆化）等技巧也可在此基础上扩展。</li>
+</ul>
+<p>下面给出一份较为详细的总结，帮助你在 Leetcode 刷题时用 Java 语言和“核心代码模式”解决动态规划（DP）问题，涵盖了字符串、1D 数组和二维矩阵三大类问题的解题步骤、思路以及代码模版。</p>
+</li>
+</ol>
+<h2 id="二、Java-语言动态规划代码模版"><a href="#二、Java-语言动态规划代码模版" class="headerlink" title="二、Java 语言动态规划代码模版"></a>二、Java 语言动态规划代码模版</h2><h3 id="1-一维数组-DP-模版"><a href="#1-一维数组-DP-模版" class="headerlink" title="1. 一维数组 DP 模版"></a>1. 一维数组 DP 模版</h3><p><strong>适用场景：</strong>  </p>
+<ul>
+<li>数列问题（如最大子数组和、最长上升子序列等）。</li>
+</ul>
+<p><strong>代码示例：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">dpOneDimension</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> nums.length;</span><br><span class="line">    <span class="type">int</span>[] dp = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">    <span class="comment">// 初始化，根据题意设定初始状态</span></span><br><span class="line">    dp[<span class="number">0</span>] = <span class="comment">/* 初始值，比如 nums[0] 或者 1 等 */</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 状态转移：例如：dp[i] = max(dp[i-1] + nums[i], nums[i])</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        dp[i] = <span class="comment">/* 根据具体题意设定转移方程，例如：Math.max(dp[i-1] + nums[i], nums[i]) */</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 根据题目要求提取答案，例如返回 dp 数组中的最大值</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">answer</span> <span class="operator">=</span> dp[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">        answer = Math.max(answer, dp[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> answer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>核心思路：</strong>  </p>
+<ul>
+<li>利用 dp 数组保存以每个位置为终点的最优解；  </li>
+<li>循环中通过前一状态推导当前状态；  </li>
+<li>最后遍历 dp 数组获取全局最优解。</li>
+</ul>
+<hr>
+<h3 id="2-字符串类-DP-模版"><a href="#2-字符串类-DP-模版" class="headerlink" title="2. 字符串类 DP 模版"></a>2. 字符串类 DP 模版</h3><p><strong>适用场景：</strong>  </p>
+<ul>
+<li>最长公共子序列（LCS）、最长回文子串&#x2F;子序列、编辑距离等问题。</li>
+</ul>
+<p><strong>代码示例（以最长公共子序列为例）：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">longestCommonSubsequence</span><span class="params">(String text1, String text2)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> text1.length(), n = text2.length();</span><br><span class="line">    <span class="comment">// dp[i][j] 表示 text1 前 i 个字符与 text2 前 j 个字符的最长公共子序列长度</span></span><br><span class="line">    <span class="type">int</span>[][] dp = <span class="keyword">new</span> <span class="title class_">int</span>[m + <span class="number">1</span>][n + <span class="number">1</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化：dp[0][j] 和 dp[i][0] 默认为 0，代表空串情况</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 状态转移</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">1</span>; j &lt;= n; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (text1.charAt(i - <span class="number">1</span>) == text2.charAt(j - <span class="number">1</span>)) &#123;</span><br><span class="line">                dp[i][j] = dp[i - <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                dp[i][j] = Math.max(dp[i - <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 返回最终结果</span></span><br><span class="line">    <span class="keyword">return</span> dp[m][n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>核心思路：</strong>  </p>
+<ul>
+<li>双重循环遍历两个字符串；  </li>
+<li>根据字符是否匹配更新二维 dp 数组；  </li>
+<li>最后返回 dp[m][n] 即为最长公共子序列长度。</li>
+</ul>
+<hr>
+<h3 id="3-二维矩阵-DP-模版"><a href="#3-二维矩阵-DP-模版" class="headerlink" title="3. 二维矩阵 DP 模版"></a>3. 二维矩阵 DP 模版</h3><p><strong>适用场景：</strong>  </p>
+<ul>
+<li>网格问题，如“最小路径和”、“不同路径”等。</li>
+</ul>
+<p><strong>代码示例（以最小路径和为例）：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minPathSum</span><span class="params">(<span class="type">int</span>[][] grid)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> grid.length, n = grid[<span class="number">0</span>].length;</span><br><span class="line">    <span class="type">int</span>[][] dp = <span class="keyword">new</span> <span class="title class_">int</span>[m][n];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化起点</span></span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">0</span>] = grid[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化第一行</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">        dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j - <span class="number">1</span>] + grid[<span class="number">0</span>][j];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化第一列</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; m; i++) &#123;</span><br><span class="line">        dp[i][<span class="number">0</span>] = dp[i - <span class="number">1</span>][<span class="number">0</span>] + grid[i][<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 状态转移：每个格子取上方与左侧最小路径和中的较小者再加上当前值</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; m; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">            dp[i][j] = grid[i][j] + Math.min(dp[i - <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 返回终点的状态，即为整个路径的最小和</span></span><br><span class="line">    <span class="keyword">return</span> dp[m - <span class="number">1</span>][n - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>核心思路：</strong>  </p>
+<ul>
+<li>用一个与 grid 同样大小的 dp 矩阵记录从起点到每个格子的最优值；  </li>
+<li>先初始化边界（第一行和第一列），避免数组越界；  </li>
+<li>根据上、左两个方向的状态计算当前状态；  </li>
+<li>最终返回终点状态作为答案。</li>
+</ul>
+<hr>
+<h2 id="三、进阶技巧与注意事项"><a href="#三、进阶技巧与注意事项" class="headerlink" title="三、进阶技巧与注意事项"></a>三、进阶技巧与注意事项</h2><ul>
+<li><p><strong>空间优化</strong>  </p>
+<ul>
+<li>如果状态转移仅依赖于上一行或前一个状态，可以将二维 dp 数组压缩为一维数组，节省空间。</li>
+</ul>
+</li>
+<li><p><strong>自顶向下与自底向上</strong>  </p>
+<ul>
+<li>根据题目规模选择递归+记忆化（自顶向下）或迭代（自底向上）的实现方式，二者效果相近，重在清晰表达状态转移逻辑。</li>
+</ul>
+</li>
+<li><p><strong>边界处理</strong>  </p>
+<ul>
+<li>处理好初始化与边界条件，避免在状态转移时出现数组越界或错误状态。</li>
+</ul>
+</li>
+<li><p><strong>核心代码模式</strong>  </p>
+<ul>
+<li>保持代码简洁和模块化，注释清晰的状态定义和转移逻辑有助于复用和快速调试。</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Leetcode/" rel="tag"># Leetcode</a>
+              <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"># 动态规划</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/03/MySQL%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/" rel="prev" title="MySQL常用语法">
+      <i class="fa fa-chevron-left"></i> MySQL常用语法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%A7%A3%E9%A2%98%E9%80%9A%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">一、动态规划解题通用步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">模板说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Java-%E8%AF%AD%E8%A8%80%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%BB%A3%E7%A0%81%E6%A8%A1%E7%89%88"><span class="nav-number">2.</span> <span class="nav-text">二、Java 语言动态规划代码模版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84-DP-%E6%A8%A1%E7%89%88"><span class="nav-number">2.1.</span> <span class="nav-text">1. 一维数组 DP 模版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB-DP-%E6%A8%A1%E7%89%88"><span class="nav-number">2.2.</span> <span class="nav-text">2. 字符串类 DP 模版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BA%8C%E7%BB%B4%E7%9F%A9%E9%98%B5-DP-%E6%A8%A1%E7%89%88"><span class="nav-number">2.3.</span> <span class="nav-text">3. 二维矩阵 DP 模版</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%BF%9B%E9%98%B6%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">3.</span> <span class="nav-text">三、进阶技巧与注意事项</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tom"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Tom</p>
+  <div class="site-description" itemprop="description">个人记录</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/" title="GitHub → https:&#x2F;&#x2F;github.com" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gmail.com" title="E-Mail → mailto:gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/" title="YouTube → https:&#x2F;&#x2F;youtube.com" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright" style="text-align: center;">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tom</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
