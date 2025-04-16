@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hutongx.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="通常情况，mac链接vpn后，浏览器可以直接通过vpn联网；然而终端默认是不通过vpn的，所以对于程序员来说，这却是一个极大的不便利: 无法通过各种命令行工具下载文件，例如wget，curl，git get，apt-get等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac命令行(终端)通过VPN联网">
+<meta property="og:url" content="https://hutongx.github.io/2025/04/16/Mac%E5%91%BD%E4%BB%A4%E8%A1%8C-%E7%BB%88%E7%AB%AF-%E9%80%9A%E8%BF%87VPN%E8%81%94%E7%BD%91/index.html">
+<meta property="og:site_name" content="Tom&#39;s Blog">
+<meta property="og:description" content="通常情况，mac链接vpn后，浏览器可以直接通过vpn联网；然而终端默认是不通过vpn的，所以对于程序员来说，这却是一个极大的不便利: 无法通过各种命令行工具下载文件，例如wget，curl，git get，apt-get等。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-04-16T08:25:54.000Z">
+<meta property="article:modified_time" content="2025-04-16T09:21:39.002Z">
+<meta property="article:author" content="Tom">
+<meta property="article:tag" content="Mac">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://hutongx.github.io/2025/04/16/Mac%E5%91%BD%E4%BB%A4%E8%A1%8C-%E7%BB%88%E7%AB%AF-%E9%80%9A%E8%BF%87VPN%E8%81%94%E7%BD%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Mac命令行(终端)通过VPN联网 | Tom's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Tom's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, My friend</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://hutongx.github.io/2025/04/16/Mac%E5%91%BD%E4%BB%A4%E8%A1%8C-%E7%BB%88%E7%AB%AF-%E9%80%9A%E8%BF%87VPN%E8%81%94%E7%BD%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpeg">
+      <meta itemprop="name" content="Tom">
+      <meta itemprop="description" content="个人记录">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tom's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mac命令行(终端)通过VPN联网
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-04-16 16:25:54 / Modified: 17:21:39" itemprop="dateCreated datePublished" datetime="2025-04-16T16:25:54+08:00">2025-04-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Mac/" itemprop="url" rel="index"><span itemprop="name">Mac</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>通常情况，mac链接vpn后，浏览器可以直接通过vpn联网；然而终端默认是不通过vpn的，所以对于程序员来说，这却是一个极大的不便利: 无法通过各种命令行工具下载文件，例如wget，curl，git get，apt-get等。</p>
+<span id="more"></span>
+
+
+<h1 id="参考一"><a href="#参考一" class="headerlink" title="参考一"></a>参考一</h1><p>下面介绍一种简单的方法，使得terminal通过vpn联网</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">export</span> http_proxy=http://proxyAddress:port</span></span><br></pre></td></tr></table></figure>
+
+<p>vpn工具联网成功后，在terminal上执行上述命令，则可使的terminal通过vpn联网<br>该方法临时有效，退出终端后失效。如果希望保持一直有效，可将上述命令添加到<code>~/.bashrc</code>等启动配置文件中</p>
+<h1 id="参考二-采用"><a href="#参考二-采用" class="headerlink" title="参考二(采用)"></a>参考二(采用)</h1><p><a href="https://limbopro.com/archives/MacOS_terminal_proxy_setting.html">macOS terminal - 让终端使用代理的方法（以ClashX配合举例）- 毒奶</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> &gt;&gt; ~/.bash_profile &lt;&lt; <span class="string">EOF</span></span></span><br><span class="line">function proxy_on() &#123;</span><br><span class="line">    export https_proxy=http://127.0.0.1:7890</span><br><span class="line">    export http_proxy=http://127.0.0.1:7890</span><br><span class="line">    export all_proxy=socks5://127.0.0.1:7890</span><br><span class="line">    echo -e &quot;终端代理已开启。&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function proxy_off()&#123;</span><br><span class="line">    unset http_proxy https_proxy all_proxy</span><br><span class="line">    echo -e &quot;终端代理已关闭。&quot;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">source ~/.bash_profile</span></span></span><br><span class="line"></span><br><span class="line">- 启用则使用命令：</span><br><span class="line">    $ proxy_on</span><br><span class="line">- 取消则使用：</span><br><span class="line">    $ proxy_off</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> &gt;&gt; ~/.zshrc &lt;&lt; <span class="string">EOF</span></span></span><br><span class="line">function proxy_on() &#123;</span><br><span class="line">    export http_proxy=http://127.0.0.1:7890</span><br><span class="line">    export http_proxy=http://127.0.0.1:7890</span><br><span class="line">    export all_proxy=socks5://127.0.0.1:7890</span><br><span class="line">    echo -e &quot;终端代理已开启。&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function proxy_off()&#123;</span><br><span class="line">    unset http_proxy https_proxy all_proxy</span><br><span class="line">    echo -e &quot;终端代理已关闭。&quot;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="meta prompt_">  </span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="string">source ~/.zshrc</span></span></span><br><span class="line"></span><br><span class="line">- 启用则使用命令：</span><br><span class="line">    $ proxy_on</span><br><span class="line">- 取消则使用：</span><br><span class="line">    $ proxy_off</span><br></pre></td></tr></table></figure>
+
+<h1 id="如何设置命令行终端是否开启代理-采用"><a href="#如何设置命令行终端是否开启代理-采用" class="headerlink" title="如何设置命令行终端是否开启代理(采用)"></a>如何设置命令行终端是否开启代理(采用)</h1><p>你是否常常遇到：Failed to connect to raw.githubusercontent.com 443的报错。 如果你用的是clash X软件，设置了系统代理，但命令行终端仍无法使用代理，下面就介绍如何单独设置代理。<br>通过</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">curl ipinfo.io</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">~ curl ipinfo.io</span><br><span class="line">&#123;</span><br><span class="line">  &quot;ip&quot;: &quot;117.135.95.42&quot;,</span><br><span class="line">  &quot;city&quot;: &quot;Shanghai&quot;,</span><br><span class="line">  &quot;region&quot;: &quot;Shanghai&quot;,</span><br><span class="line">  &quot;country&quot;: &quot;CN&quot;,</span><br><span class="line">  &quot;loc&quot;: &quot;31.2222,121.4581&quot;,</span><br><span class="line">  &quot;org&quot;: &quot;AS24400 Shanghai Mobile Communications Co.,Ltd.&quot;,</span><br><span class="line">  &quot;postal&quot;: &quot;200000&quot;,</span><br><span class="line">  &quot;timezone&quot;: &quot;Asia/Shanghai&quot;,</span><br><span class="line">  &quot;readme&quot;: &quot;https://ipinfo.io/missingauth&quot;</span><br><span class="line">&#125;% </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">~ proxy_on      </span><br><span class="line">终端代理已开启。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">~ curl ipinfo.io</span><br><span class="line">&#123;</span><br><span class="line">  &quot;ip&quot;: &quot;205.198.69.27&quot;,</span><br><span class="line">  &quot;city&quot;: &quot;San Jose&quot;,</span><br><span class="line">  &quot;region&quot;: &quot;California&quot;,</span><br><span class="line">  &quot;country&quot;: &quot;US&quot;,</span><br><span class="line">  &quot;loc&quot;: &quot;37.2329,-121.7875&quot;,</span><br><span class="line">  &quot;org&quot;: &quot;AS138997 Eons Data Communications Limited&quot;,</span><br><span class="line">  &quot;postal&quot;: &quot;95119&quot;,</span><br><span class="line">  &quot;timezone&quot;: &quot;America/Los_Angeles&quot;,</span><br><span class="line">  &quot;readme&quot;: &quot;https://ipinfo.io/missingauth&quot;</span><br><span class="line">&#125;%       </span><br><span class="line">```                                                                                                                                                                   </span><br><span class="line">命令就查看终端的ip详情，知晓是否开启代理。</span><br><span class="line"></span><br><span class="line">（本文提及的设置是在mac OS环境，Linux系统，可做参考）</span><br><span class="line">1. 通过以下命令查看，所用命令行终端所用的是zshrc还是bash</span><br></pre></td></tr></table></figure>
+<p>echo $SHELL</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. 若是zshrc，对应修改.zshrc文件；若是bash，则对应修改.bash_profile文件，在文件中写入以下设置：</span><br><span class="line">打开clashX复制终端代理命令:(export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">![示意图](/image1.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">`vim ~/.zshrc`添加一下内容:</span><br></pre></td></tr></table></figure>
+<p>function proxy_on() {<br>    export https_proxy&#x3D;<a href="http://127.0.0.1:7890/">http://127.0.0.1:7890</a><br>    export http_proxy&#x3D;<a href="http://127.0.0.1:7890/">http://127.0.0.1:7890</a><br>    export all_proxy&#x3D;socks5:&#x2F;&#x2F;127.0.0.1:7890<br>    printf “Proxy is on.\n”<br>}<br>function proxy_off () {<br>    unset https_proxy<br>    unset http_proxy<br>    unset all_proxy<br>    printf “Proxy is off.\n”<br>}</p>
+<pre><code>3. 生效设置文件 `source ~/.zshrc`
+4. 实现代理开关自由：`proxy_on`开启，`proxy_off`来关闭。
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Mac/" rel="tag"># Mac</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/05/Java%E7%9A%84hashCode()%E5%92%8Cequals()%E6%96%B9%E6%B3%95/" rel="prev" title="Java的hashCode()和equals() 方法">
+      <i class="fa fa-chevron-left"></i> Java的hashCode()和equals() 方法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E4%B8%80"><span class="nav-number">1.</span> <span class="nav-text">参考一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E4%BA%8C-%E9%87%87%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">参考二(采用)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%BB%88%E7%AB%AF%E6%98%AF%E5%90%A6%E5%BC%80%E5%90%AF%E4%BB%A3%E7%90%86-%E9%87%87%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">如何设置命令行终端是否开启代理(采用)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Tom"
+      src="/uploads/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Tom</p>
+  <div class="site-description" itemprop="description">个人记录</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/" title="GitHub → https:&#x2F;&#x2F;github.com" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gmail.com" title="E-Mail → mailto:gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/" title="YouTube → https:&#x2F;&#x2F;youtube.com" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright" style="text-align: center;">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tom</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
